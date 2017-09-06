@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Recorder {
 
-    public static final String FILE_ENDING = ".acc";
+    public static final String FILE_ENDING = ".aac";
     public static final int REQUEST_RECORD_AUDIO_PERMISSION = 200;
 
     private String lastFileName;
@@ -16,10 +16,10 @@ public class Recorder {
     public void startRecording(String mFileName) {
         lastFileName = mFileName;
         mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(1);
-        mRecorder.setOutputFormat(6);
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.AAC_ADTS);
         mRecorder.setOutputFile(mFileName);
-        mRecorder.setAudioEncoder(3);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
         try {
             mRecorder.prepare();
         } catch (IOException e) {

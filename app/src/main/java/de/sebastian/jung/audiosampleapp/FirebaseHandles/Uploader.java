@@ -1,4 +1,4 @@
-package de.sebastian.jung.audiosampleapp.FirebaseHandles;
+package de.sebastian.jung.audiosampleapp.firebasehandles;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;

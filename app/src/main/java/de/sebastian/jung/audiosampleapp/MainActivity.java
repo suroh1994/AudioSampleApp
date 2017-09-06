@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -18,7 +17,7 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import de.sebastian.jung.audiosampleapp.FirebaseHandles.Uploader;
+import de.sebastian.jung.audiosampleapp.firebasehandles.Uploader;
 import de.sebastian.jung.audiosampleapp.datastructure.Recorder;
 import de.sebastian.jung.audiosampleapp.datastructure.Recording;
 import de.sebastian.jung.audiosampleapp.dialogs.ErrorExternalDirDialog;
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.button_submit)
     public void onSubmitClicked() {
         uploader.uploadRecording(lastRecording);
-        updateRequest();
     }
 
     @OnClick({ R.id.radio_male, R.id.radio_female})
@@ -185,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
         mSubmitButton.setEnabled(!disableButton);
         int successfulUploads = sp_userData.getInt(Constants.USER_UPLOAD, 0);
         if (uploadSuccessful) {
+            updateRequest();
             successfulUploads++;
 
             SharedPreferences.Editor sp_editor = sp_userData.edit();
