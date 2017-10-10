@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private String[] permissions = new String[]{"android.permission.RECORD_AUDIO"};
     //Additional Objects
     private SharedPreferences sp_userData;
-    private Random rand = null;
     private UUID uuid;
     private Recording lastRecording = null;
     private Recorder recorder;
@@ -133,7 +132,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateRequest() {
-        lastSentiment = rand.nextBoolean();
+        lastSentiment = !lastSentiment;
+        SharedPreferences.Editor sp_editor = sp_userData.edit();
+        sp_editor.putBoolean(Constants.USER_LAST_SENTIMENT, lastSentiment);
+        sp_editor.apply();
         if (lastSentiment) {
             mRequestTextView.setText("Bitte sag 'Toll' auf eine erfreute/fröhliche/glückliche Art.");
         } else {
@@ -145,13 +147,16 @@ public class MainActivity extends AppCompatActivity {
         sp_userData = getSharedPreferences(Constants.USER_DATA_PREFERENCES, 0);
 
         isMale = sp_userData.getBoolean(Constants.USER_GENDER, true);
+        lastSentiment = sp_userData.getBoolean(Constants.USER_LAST_SENTIMENT, true);
         uuid = UUID.fromString(
                 sp_userData.getString(Constants.USER_UUID, UUID.randomUUID().toString()));
 
         if (!sp_userData.contains(Constants.USER_GENDER) ||
+                !sp_userData.contains(Constants.USER_LAST_SENTIMENT) ||
                 !sp_userData.contains(Constants.USER_UUID)) {
             SharedPreferences.Editor sp_editor = sp_userData.edit();
             sp_editor.putBoolean(Constants.USER_GENDER, isMale);
+            sp_editor.putBoolean(Constants.USER_LAST_SENTIMENT, lastSentiment);
             sp_editor.putString(Constants.USER_UUID, uuid.toString());
             sp_editor.apply();
         }
@@ -164,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), ErrorExternalDirDialog.TAG);
         }
 
-        rand = new Random();
         uploader = new Uploader(this, uuid);
     }
 

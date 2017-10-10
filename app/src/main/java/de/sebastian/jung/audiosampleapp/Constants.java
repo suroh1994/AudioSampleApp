@@ -9,4 +9,5 @@ public class Constants {
     public static final String USER_UUID = "UserUUID";
     public static final String USER_GENDER = "UserGender";
     public static final String USER_UPLOAD = "UserUpload";
+    public static final String USER_LAST_SENTIMENT = "UserLastSentiment";
 }
